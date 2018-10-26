@@ -1,9 +1,10 @@
 use data::*;
+use data::Object::*;
 
 pub fn eval(ast: Object) -> Object {
     match ast {
-        Object::Atom(s) => Object::Atom(s),
-        Object::Number(n) => Object::Number(n),
+        Atom(s) => Atom(s),
+        Number(n) => Number(n),
     }
 }
 
