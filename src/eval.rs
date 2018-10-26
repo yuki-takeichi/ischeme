@@ -14,7 +14,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn eval_number() {
+    fn eval_atom() {
         let ast = Object::Atom("hoge".to_string());
         assert_eq!(eval(ast.clone()), ast);
     }
