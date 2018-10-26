@@ -1,8 +1,4 @@
-#[derive(Debug, PartialEq, Clone)]
-pub enum Object {
-    Atom(String),
-    Number(i32),
-}
+use data::*;
 
 pub fn eval(ast: Object) -> Object {
     match ast {
