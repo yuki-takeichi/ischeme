@@ -1,0 +1,6 @@
+[package]
+name = "ischeme"
+version = "0.1.0"
+authors = ["Yuki Takeichi <yuki.takeichi@gmail.com>"]
+
+[dependencies]
