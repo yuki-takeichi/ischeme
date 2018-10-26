@@ -15,7 +15,13 @@ mod tests {
 
     #[test]
     fn eval_atom() {
-        let ast = Object::Atom("hoge".to_string());
+        let ast = Atom("hoge".to_string());
+        assert_eq!(eval(ast.clone()), ast);
+    }
+
+    #[test]
+    fn eval_number() {
+        let ast = Number(777);
         assert_eq!(eval(ast.clone()), ast);
     }
 }
