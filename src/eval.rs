@@ -10,9 +10,9 @@ pub fn eval(ast: Object) -> Result<Object, RuntimeError> {
         Atom(s) => Ok(Atom(s)),
         Number(n) => Ok(Number(n)),
         Nil => Ok(Nil),
-        Closure(s) => Ok(Closure(s)),
+        Closure(s, e) => Ok(Closure(s, e)),
         Cons(box car, box cdr) => match car { 
-            Closure(_) => apply(&car, &cdr),
+            Closure(_, _) => apply(&car, &cdr),
             _ => Err("hoge"),
         }
     }
@@ -20,7 +20,7 @@ pub fn eval(ast: Object) -> Result<Object, RuntimeError> {
 
 pub fn apply(car: &Object, _: &Object) -> Result<Object, RuntimeError> {
     match car {
-        Closure(_) => Ok(Nil),
+        Closure(_, _) => Ok(Nil),
         _ => Ok(Nil),
     }
 }
@@ -48,7 +48,7 @@ mod tests {
 
     #[test]
     fn eval_one_plus_two() {
-        let ast = list3(Closure("+".to_string()),
+        let ast = list3(Closure("+".to_string(), None),
                         Number(1),
                         Number(2));
         assert_eq!(eval(ast.clone()), Ok(Number(3)));
