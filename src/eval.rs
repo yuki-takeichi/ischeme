@@ -42,9 +42,15 @@ mod tests {
         assert_eq!(eval(ast.clone()), Ok(ast));
     }
 
+    fn list3(o1: Object, o2: Object, o3: Object) -> Object {
+        Cons(box o1, box Cons(box o2, box Cons(box o3, box Nil)))
+    }
+
     #[test]
     fn eval_one_plus_two() {
-        let ast = Cons(box Closure("+".to_string()), box Cons(box Number(1), box Cons(box Number(2), box Nil)));
+        let ast = list3(Closure("+".to_string()),
+                        Number(1),
+                        Number(2));
         assert_eq!(eval(ast.clone()), Ok(Number(3)));
     }
 }
