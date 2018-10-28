@@ -7,15 +7,11 @@ type RuntimeError = &'static str;
 
 pub fn eval(ast: Object) -> Result<Object, RuntimeError> {
     match ast {
-        Atom(s) => Ok(Atom(s)),
-        Number(n) => Ok(Number(n)),
-        Nil => Ok(Nil),
-        // TODO: この時点では単なるidentにしておかないとだめ?
-        Closure(s, e) => Ok(Closure(s, e)),
         Cons(box car, box cdr) => match car { 
             Closure(_, _) => apply(&car, &cdr),
             _ => Err("hoge"),
-        }
+        },
+        _ => Ok(ast),
     }
 }
 
@@ -49,7 +45,7 @@ mod tests {
 
     #[test]
     fn apply_one_plus_two() {
-        let ast = list3(Closure("+".to_string(), None),
+        let ast = list3(Atom("+".to_string()),
                         Number(1),
                         Number(2));
         assert_eq!(eval(ast.clone()), Ok(Number(3)));
