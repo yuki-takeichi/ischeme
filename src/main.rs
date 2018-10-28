@@ -4,6 +4,6 @@ use ischeme::data::*;
 
 fn main() {
     let o = Object::Number(777);
-    eval(o).is_ok();
+    eval(o, Env::root()).is_ok();
     println!("done");
 }

@@ -12,6 +12,24 @@ pub enum Object {
     Nil,
 }
 
+impl Object {
+    pub fn is_func(&self) -> bool {
+        match self {
+            Object::Closure(_, _) => true,
+            Object::Primitive(_) => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_list(&self) -> bool {
+        match self {
+            Object::Cons(_, _) => true,
+            Object::Nil => true,
+            _ => false,
+        }
+    }
+}
+
 #[derive(Clone)]
 pub struct PrimFunc {
     name: &'static str,
@@ -32,8 +50,8 @@ impl PartialEq for PrimFunc {
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Env {
-    parent: Option<Box<Env>>,
-    map: HashMap<String, Box<Object>>,
+    pub parent: Option<Box<Env>>,
+    pub map: HashMap<String, Box<Object>>,
 }
 
 fn __plus(args: &[Object]) -> Result<Object, &'static str> {
@@ -48,7 +66,7 @@ fn __plus(args: &[Object]) -> Result<Object, &'static str> {
 }
 
 impl Env {
-    fn default() -> Env {
+    pub fn root() -> Env {
         let mut map = HashMap::new();
         let prim = Object::Primitive(PrimFunc {name: "+", body: __plus});
         map.insert("+".to_string(), box prim);
