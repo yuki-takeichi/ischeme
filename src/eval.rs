@@ -37,7 +37,10 @@ fn get_args(list: &Object) -> Option<Vec<&Box<Object>>> {
 
 pub fn apply(f: &Object, list: &Object) -> Result<Object, RuntimeError> {
     if let Some(args) = get_args(list) {
-        Ok(Nil)
+        match f {
+            Primitive(p) => (p.body)(&args[..]),
+            _ => Err("TODO"),
+        }
     } else {
         Err("args should be a list")
     }
