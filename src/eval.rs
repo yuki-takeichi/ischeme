@@ -10,6 +10,7 @@ pub fn eval(ast: Object) -> Result<Object, RuntimeError> {
         Atom(s) => Ok(Atom(s)),
         Number(n) => Ok(Number(n)),
         Nil => Ok(Nil),
+        // TODO: この時点では単なるidentにしておかないとだめ?
         Closure(s, e) => Ok(Closure(s, e)),
         Cons(box car, box cdr) => match car { 
             Closure(_, _) => apply(&car, &cdr),
@@ -47,7 +48,7 @@ mod tests {
     }
 
     #[test]
-    fn eval_one_plus_two() {
+    fn apply_one_plus_two() {
         let ast = list3(Closure("+".to_string(), None),
                         Number(1),
                         Number(2));
